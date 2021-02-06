@@ -81,11 +81,11 @@ def all_hikes(request):
 
 
 def hike_show(request, hike_id):
-    hike_all = Hike.objects.all()
-    hike_id = Hike.objects.get(id=hike_id)
+    hike = Hike.objects.get(id=hike_id)
+
     reports = Report.objects.filter(hike_id=hike_id)
     user = User.objects.get(id=request.user.id)
     photos = Photo.objects.all()
-    context = {'reports': reports, 'hike_all': hike_all, 'hike_id': hike_id,
+    context = {'reports': reports, 'hike': hike,
                'user': user, 'photos': photos}
     return render(request, 'Hikes/hikeShow.html', context)
