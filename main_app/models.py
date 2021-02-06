@@ -1,23 +1,13 @@
 from django.db import models
 
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 
 # Create your models here.
 
 
-# class Profile (models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-#     @receiver(post_save, sender=User)
-#     def create_user_profile(sender, instance, created, **kwargs):
-#         if created:
-#             Profile.objects.create(user=instance)
-
-#     @receiver(post_save, sender=User)
-#     def save_user_profile(sender, instance, **kwargs):
-#         instance.profile.save()
+class Profile (models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class Hike (models.Model):
@@ -42,7 +32,7 @@ class Hike (models.Model):
         max_length=2,
         choices=region_choices,
         default=PugetSound)
-    image = models.FileField(upload_to='static/css/resources')
+    image = models.ImageField(upload_to='images/')
     description = models.CharField(max_length=5000, default=None)
     directions = models.CharField(max_length=5000)
 
@@ -59,7 +49,10 @@ class Report (models.Model):
     road = models.CharField(max_length=50)
     bugs = models.CharField(max_length=50)
     snow = models.CharField(max_length=50)
-    image = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images/')
+
+    class Meta:
+        ordering = ['-id']
 
     def __str__(self):
         return f"{self.user}"

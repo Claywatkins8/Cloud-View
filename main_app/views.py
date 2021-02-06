@@ -5,7 +5,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 
-from .models import User, Hike, Report, Photo
+from .models import User, Hike, Report, Photo, Profile
 from .forms import NewUserForm, Report_Form
 
 from django.conf import settings
@@ -49,9 +49,43 @@ def about(request):
     return render(request, 'about.html')
 
 
-def all_map(request):
-    return render(request, 'map.html')
+def reports_show(request, report_id):
+    report = Report.object.get(id=report_id)
+    user = User.object.get(id=report.user_id)
+    auth_user = User.objects.get(id=request.user.id)
+    photos = Photo.objects.all()
+    context = {'report': report, 'user': user,
+               'auth_user': auth_user, 'photos': photos}
+    return render(request, 'allReports.html', context)
 
 
-def reports_show(request):
-    return render(request, 'allReports.html')
+def profile(request):
+    user = User.objects.get(id=request.user.id)
+    if Profile.objects.filter(user_id=request.user.id):
+        profile = Profile.objects.get(user_id=request.user.id)
+    else:
+        profile = ""
+    reports = Report.objects.filter(user=request.user)
+    context = {'profile': profile,
+               'user': user, 'reports': reports}
+    return render(request, 'profile.html', context)
+
+
+def all_hikes(request):
+    hike_all = Hike.objects.all()
+    user = User.objects.get(id=request.user.id)
+    photos = Photo.objects.all()
+    context = {
+        'hike_all': hike_all, 'user': user, 'photos': photos}
+    return render(request, 'map.html', context)
+
+
+def hike_show(request, hike_id):
+    hike_all = Hike.objects.all()
+    hike_id = Hike.objects.get(id=hike_id)
+    reports = Report.objects.filter(hike_id=hike_id)
+    user = User.objects.get(id=request.user.id)
+    photos = Photo.objects.all()
+    context = {'reports': reports, 'hike_all': hike_all, 'hike_id': hike_id,
+               'user': user, 'photos': photos}
+    return render(request, 'Hikes/hikeShow.html', context)

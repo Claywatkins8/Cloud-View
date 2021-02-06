@@ -1,3 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-<p>all reports</p>
+<div id="vertical-aligned-parent">
+  <div id="vertical-center-aligned" class="ui text container">
+    {% for report in reports %}
+    <h3 class="ui header">{{report.hike}}</h3>
+    <p>{{ report.content }}</p>
+    <div class="ui section divider"></div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

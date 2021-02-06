@@ -65,3 +65,19 @@ a:hover {
 .ui.menu .item {
   color: #f1f2e9;
 }
+
+#vertical-center-aligned {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#vertical-aligned-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 100%;
+  position: relative;
+  flex-wrap: wrap;
+}
