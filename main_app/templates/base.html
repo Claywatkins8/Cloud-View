@@ -60,10 +60,7 @@
           $(".login").modal("hide");
         });
 
-        $("#signup_modal").click(function () {
-          $(".signup").modal("show");
-        });
-        $("#signup_modal2").click(function () {
+        $(".signup_modal").click(function () {
           $(".signup").modal("show");
         });
 
@@ -71,9 +68,14 @@
           $("#modal-" + this.id).modal("show");
         });
 
-        $("#post_modal").click(function () {
-          $(".post").modal("show");
+        $("#report_modal").click(function () {
+          $(".report").modal("show");
         });
+
+        $(".dropdownjs").click(function () {
+          $(".dropdownjs").dropdown();
+        });
+
         $(".login").modal({
           closable: true,
         });
@@ -108,7 +110,7 @@
           {% endif %}
           <div class="actions">
             <input type="submit" class="ui button" value="Login" />
-            <a class="ui button" id="signup_modal">Sign Up</a>
+            <a class="ui button signup_modal">Sign Up</a>
             <input type="hidden" name="next" value="{{ next }}" />
           </div>
         </form>
@@ -226,7 +228,7 @@
         <a class="item" href="{% url 'logout' %}">Log Out</a>
         {% else %}
         <a class="item button" id="login_modal">Login</a>
-        <a class="item button" id="signup_modal">Sign Up</a>
+        <a class="item button signup_modal" i>Sign Up</a>
         {% endif %}
       </div>
     </div>

@@ -82,10 +82,25 @@ def all_hikes(request):
 
 def hike_show(request, hike_id):
     hike = Hike.objects.get(id=hike_id)
-
+    hike_id = Hike.objects.get(id=hike_id)
     reports = Report.objects.filter(hike_id=hike_id)
     user = User.objects.get(id=request.user.id)
     photos = Photo.objects.all()
-    context = {'reports': reports, 'hike': hike,
+    context = {'reports': reports, 'hike': hike, 'hike_id': hike_id,
                'user': user, 'photos': photos}
     return render(request, 'Hikes/hikeShow.html', context)
+
+
+def report_create(request, hike_id):
+    if request.method == 'POST':
+        report_form = Report_Form(request.POST)
+        if report_form.is_valid():
+            new_report = report_form.save(commit=False)
+            new_report.user = request.user
+            new_report.hike_id = hike_id
+            new_report.save()
+            return redirect('Hikes/hikeShow.html', hike_id=hike_id)
+
+    report_form = Report_Form()
+    context = {'report_form': report_form, 'hike_id': hike_id}
+    return render(request, 'Reports/create.html', context)

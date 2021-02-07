@@ -2,7 +2,7 @@
 <div id="vertical-aligned-parent">
   {% for hike in hike_all %}
   <div id="vertical-center-aligned" class="ui text container">
-    <h3 class="ui header">{{hike.name}}</h3>
+    <a href="/hike/{{hike.id}}"> {{hike.name}} </a>
     <div class="ui section divider"></div>
   </div>
   {% endfor %}
