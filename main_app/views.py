@@ -49,17 +49,26 @@ def about(request):
     return render(request, 'about.html')
 
 
+def reports_all(request):
+    reports = Report.objects.all()
+    photos = Photo.objects.all()
+    context = {'reports': reports,
+               'photos': photos}
+    return render(request, 'allReports.html', context)
+
+
 def reports_show(request, report_id):
-    report = Report.object.get(id=report_id)
-    user = User.object.get(id=report.user_id)
+    report = Report.objects.get(id=report_id)
+    user = User.objects.get(id=report.user_id)
     auth_user = User.objects.get(id=request.user.id)
     photos = Photo.objects.all()
     context = {'report': report, 'user': user,
                'auth_user': auth_user, 'photos': photos}
-    return render(request, 'allReports.html', context)
+    return render(request, 'Reports/show.html', context)
 
 
 def profile(request):
+
     user = User.objects.get(id=request.user.id)
     if Profile.objects.filter(user_id=request.user.id):
         profile = Profile.objects.get(user_id=request.user.id)

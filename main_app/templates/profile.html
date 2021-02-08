@@ -1,32 +1,42 @@
 {% extends 'base.html' %} {% block content %}
-
-<div id="container-box" class="ui center aligned stackable grid container">
-  <div id="left-box" class="four wide computer three wide tablet six wide mobile column">
-
-
-    <h3 class="ui center aligned header">{{ user.first_name}} {{user.last_name}}</h3>
-
-    <div class="ui segment">
-     
-      {% comment %} User info {% endcomment %}
-      <p>Date Joined: {{ user.date_joined }}</p>
-      <p> Email: {{ user.email }}</p>
-     
+<div class="ui two column grid">
+  <div class="column">
+    <div class="ui centered card">
+      <div class="image">
+        <img src="/images/avatar2/large/kristy.png" />
+      </div>
+      <div class="content">
+        <a class="header">{{ user.first_name}} {{user.last_name}}</a>
+        <div class="meta">
+          <span class="date">{{ user.date_joined }}</span>
+        </div>
+      </div>
+      <div class="extra content">
+        <a>
+          <i class="user icon"></i>
+          {{ user.email }}
+        </a>
+      </div>
     </div>
   </div>
 
-  <div id="right-box" class="nine wide computer nine wide tablet six wide mobile column">
-    <h3 class="ui center aligned header">Posts</h3>
+  <div class="column">
+    <h3>Reports</h3>
     {% for report in reports %}
-    <div class="ui segment">
-      <a href="{% url 'report_show' report_id=report.id %}">
-        <p>{{ report.content }}</p>
-      </a>
+
+    <div class="ui text container">
+      <div class="ui hidden divider"></div>
+      <h3 class="ui header">
+        <a href="hike/{{report.hike_id}}"> {{report.hike}} </a>
+      </h3>
+      <p>
+        <a href="{% url 'reports_show' report_id=report.id %}">
+          {{report.user}}</a
+        >
+      </p>
+      <div class="ui section divider"></div>
     </div>
     {% endfor %}
   </div>
 </div>
-
-</div>
-
 {% endblock %}

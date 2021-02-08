@@ -1,11 +1,24 @@
 {% extends 'base.html' %} {% block content %}
-<div id="vertical-aligned-parent">
-  <div id="vertical-center-aligned" class="ui text container">
-    {% for report in reports %}
-    <h3 class="ui header">{{report.hike}}</h3>
-    <p>{{ report.content }}</p>
-    <div class="ui section divider"></div>
-    {% endfor %}
+
+<div class="ui grid">
+  <div class="column">
+    <div class="center aligned row">
+      <div class="ui text container">
+        <h2 class="ui header center aligned">All Reports</h2>
+        {% for report in reports %}
+        <div class="ui hidden divider"></div>
+        <h3 class="ui header">
+          <a href="hike/{{report.hike_id}}"> {{report.hike}} </a>
+        </h3>
+        <p>
+          <a href="{% url 'reports_show' report_id=report.id %}">
+            {{report.user}}</a
+          >
+        </p>
+        <div class="ui section divider"></div>
+        {%endfor%}
+      </div>
+    </div>
   </div>
+  {% endblock %}
 </div>
-{% endblock %}
