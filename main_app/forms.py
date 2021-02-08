@@ -14,4 +14,4 @@ class Report_Form(ModelForm):
     class Meta:
         model = Report
         fields = ['hikeType', 'content', 'conditions',
-                  'road', 'bugs', 'snow', 'image']
+                  'road', 'bugs', 'snow']

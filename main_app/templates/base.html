@@ -72,9 +72,7 @@
           $(".report").modal("show");
         });
 
-        $(".dropdownjs").click(function () {
-          $(".dropdownjs").dropdown();
-        });
+        $(".ui.dropdown").dropdown({ showOnFocus: false });
 
         $(".login").modal({
           closable: true,

@@ -94,13 +94,14 @@ def hike_show(request, hike_id):
 def report_create(request, hike_id):
     if request.method == 'POST':
         report_form = Report_Form(request.POST)
+        print(report_form.errors)
         if report_form.is_valid():
             new_report = report_form.save(commit=False)
             new_report.user = request.user
             new_report.hike_id = hike_id
             new_report.save()
-            return redirect('Hikes/hikeShow.html', hike_id=hike_id)
+            return redirect('hike_show', hike_id=hike_id)
 
-    report_form = Report_Form()
-    context = {'report_form': report_form, 'hike_id': hike_id}
-    return render(request, 'Reports/create.html', context)
+    # report_form = Report_Form()
+    # context = {'report_form': report_form, 'hike_id': hike_id}
+    return redirect('all_hikes')
