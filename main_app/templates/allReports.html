@@ -2,23 +2,29 @@
 
 <div class="ui grid">
   <div class="column">
-    <div class="center aligned row">
-      <div class="ui text container">
-        <h2 class="ui header center aligned">All Reports</h2>
-        {% for report in reports %}
-        <div class="ui hidden divider"></div>
+    <div class="ui text container">
+      <h2 class="ui header center aligned">All Reports</h2>
+      {% for report in reports %}
+      <div class="ui raised segment">
         <h3 class="ui header">
-          <a href="hike/{{report.hike_id}}"> {{report.hike}} </a>
+          <a href="/hike/{{report.hike_id}}"> {{report.hike}} </a>
         </h3>
+        <p>{{report.hikeType}}</p>
+
         <p>
           <a href="{% url 'reports_show' report_id=report.id %}">
-            {{report.user}}</a
+            Hiker: {{report.user}}</a
           >
         </p>
-        <div class="ui section divider"></div>
-        {%endfor%}
+        <button class="fluid ui button">
+          <a href="{% url 'reports_show' report_id=report.id %}">
+            View Full Report</a
+          >
+        </button>
       </div>
+
+      {%endfor%}
     </div>
   </div>
-  {% endblock %}
 </div>
+{% endblock %}

@@ -1,10 +1,17 @@
-{% extends 'base.html' %} {% block content %} {% for hike in hike_all %}
-<div id="vertical-aligned-parent">
-  {% for hike in hike_all %}
-  <div id="vertical-center-aligned" class="ui text container">
-    <a href="/hike/{{hike.id}}"> {{hike.name}} </a>
-    <div class="ui section divider"></div>
+{% extends 'base.html' %} {% block content %}
+
+<div class="ui grid">
+  <div class="column">
+    <div class="ui text container">
+      <h2 class="ui header center aligned">All Hikes</h2>
+      {% for hike in hike_all %}
+      <div class="ui raised segment">
+        <h3 class="ui header">
+          <a href="/hike/{{hike.id}}"> {{hike.name}} </a>
+        </h3>
+      </div>
+      {%endfor%}
+    </div>
   </div>
-  {% endfor %}
 </div>
-{% endfor %} {% endblock %}
+{% endblock %}

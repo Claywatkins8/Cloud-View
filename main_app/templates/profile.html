@@ -20,21 +20,19 @@
     </div>
   </div>
 
-  <div class="column">
-    <h3>Reports</h3>
-    {% for report in reports %}
+  <div class="four wide column">
+    <h2>Reports</h2>
 
-    <div class="ui text container">
-      <div class="ui hidden divider"></div>
+    {% for report in reports %}
+    <div class="ui raised segment">
       <h3 class="ui header">
-        <a href="hike/{{report.hike_id}}"> {{report.hike}} </a>
+        <a href="/hike/{{report.hike_id}}"> {{report.hike}} </a>
       </h3>
       <p>
         <a href="{% url 'reports_show' report_id=report.id %}">
           {{report.user}}</a
         >
       </p>
-      <div class="ui section divider"></div>
     </div>
     {% endfor %}
   </div>

@@ -38,10 +38,11 @@ def home(request):
                 else:
                     context = {'error': 'Invalid signup, please try again!'}
                     return render(request, 'home.html', context)
-
+    reports = Report.objects.all().order_by('-id')[:3]
     signup_form = NewUserForm()
     login_form = AuthenticationForm()
-    context = {'signup_form': signup_form, 'login_form': login_form, }
+    context = {'reports': reports, 'signup_form': signup_form,
+               'login_form': login_form, }
     return render(request, 'home.html', context)
 
 

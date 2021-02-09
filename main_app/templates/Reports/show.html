@@ -1,2 +1,61 @@
-{% extends 'base.html' %} {% block content %} {{report.hike}} {{report.content}}
+{% extends 'base.html' %} {% block content %}
+
+<div class="ui grid">
+  <div class="two wide center aligned column"></div>
+  <div class="six wide column">
+    <h1>{{report.hike}}</h1>
+    <div class="ui section hidden divider"></div>
+    <h5>TRIP REPORT BY:</h5>
+    <p>{{report.user}}</p>
+    <div class="ui section hidden divider"></div>
+    <h5>DATE HIKED</h5>
+  </div>
+  <div class="six wide column">
+    <div class="row">
+      <p>Type of Hike: {{report.hikeType}}</p>
+      <div class="ui section divider"></div>
+    </div>
+    <div class="row">
+      <p>Trail Conditions: {{report.conditions}}</p>
+      <div class="ui section divider"></div>
+    </div>
+    <div class="row">
+      <p>Road Conditions: {{report.road}}</p>
+      <div class="ui section divider"></div>
+    </div>
+    <div class="row">
+      <p>Bugs: {{report.bugs}}</p>
+      <div class="ui section divider"></div>
+    </div>
+    <div class="row">
+      <p>Snow: {{report.snow}}</p>
+    </div>
+  </div>
+</div>
+<div class="ui section divider"></div>
+<div class="two wide center aligned column"></div>
+<div class="twelve wide column">
+  {% comment %} <img src="/media/{{report.image}}" alt="" /> {% endcomment %}
+</div>
+
+<div class="ui grid">
+  <div class="two wide center aligned column"></div>
+  <div class="six wide column">
+    <p>{{report.content}}</p>
+  </div>
+  <div class="six wide column">
+    <div class="row">
+      <button class="fluid ui button">
+        <a href="/hike/{{report.hike_id}}"> {{report.hike}} </a>
+      </button>
+      <div class="ui section divider"></div>
+    </div>
+    <div class="row">
+      <button class="fluid ui button">
+        <a href="/reports"> All Trip Reports </a>
+      </button>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
