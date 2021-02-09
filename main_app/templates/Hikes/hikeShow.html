@@ -3,7 +3,7 @@
 <p>{{ hike.description }}</p>
 {% for report in reports%} {{report.content}} {% endfor %} {% comment %} Report
 Modal {% endcomment %}
-<a id="report_modal" class="ui inverted button">Add Report</a>
+<a class="ui inverted report_modal button">Add Report</a>
 <div class="ui modal report">
   <i class="close icon"></i>
   <div class="header">New Report</div>
@@ -122,10 +122,10 @@ Modal {% endcomment %}
                 <input type="submit" class="ui button" value="Create Report" />
               </div>
             </div>
-            {% endblock %}
           </div>
         </div>
       </div>
     </form>
   </div>
 </div>
+{% endblock %}

@@ -54,8 +54,150 @@
       <button class="fluid ui button">
         <a href="/reports"> All Trip Reports </a>
       </button>
+      <div class="ui section divider"></div>
+    </div>
+    <div class="row">
+      <button class="fluid ui button">
+        <a class="report_modal">Edit This Report</a>
+      </button>
+      <div class="ui section divider"></div>
+    </div>
+    <div class="row">
+      <button class="fluid ui button">
+        <a
+          href="{% url 'report_delete' report_id=report.id hike_id=report.hike_id %}"
+          >Delete</a
+        >
+      </button>
     </div>
   </div>
 </div>
 
+{% comment %} Report Modal {% endcomment %}
+
+<div class="ui modal report">
+  <i class="close icon"></i>
+  <div class="header">Edit Report</div>
+  <div class="content">
+    <form
+      enctype="multipart/form-data"
+      method="POST"
+      action="{% url 'reports_edit' report_id=report.id %}"
+    >
+      {% csrf_token %}
+      <div class="ui equal width form error">
+        <div class="field">
+          <select class="ui dropdown" name="hikeType">
+            <option class="item" default value="">{{report.hikeType}}</option>
+            <option class="item" value="Day Hike">Day Hike</option>
+            <option class="item" value="Overnight">Overnight</option>
+            <option class="item" value="Multi-Day">Multi-Day</option>
+            <option class="item" value="Snowshoe/XC Ski">
+              Snowshoe/XC Ski
+            </option>
+          </select>
+        </div>
+
+        <div class="ui equal width form error">
+          <div class="field">
+            <select class="ui dropdown" name="conditions">
+              <option class="item" default value="">
+                {{report.conditions}}
+              </option>
+              <option class="item" value="Trail in good conditon">
+                Trail in good conditon
+              </option>
+              <option class="item" value="Obstacles on trail">
+                Obstacles on trail
+              </option>
+              <option class="item" value="Trail difficult/impossible">
+                Trail difficult/impossible
+              </option>
+              <option class="item" value="Minor obstacles">
+                Minor obstacles
+              </option>
+            </select>
+          </div>
+
+          <div class="ui equal width form error">
+            <div class="field">
+              <select class="ui dropdown" name="road">
+                <option class="item" default value="">{{report.road}}</option>
+                <option class="item" value="road suitable for all vehicles">
+                  road suitable for all vehicles
+                </option>
+                <option class="item" value="Road rough but passable">
+                  Road rough but passable
+                </option>
+                <option
+                  class="item"
+                  value="Road recommended for high clearance only"
+                >
+                  Road recommended for high clearance only
+                </option>
+                <option class="item" value="Snow and ice on road">
+                  Snow and ice on road
+                </option>
+                <option class="item" value="Road impassable or closed">
+                  Road impassable or closed
+                </option>
+              </select>
+            </div>
+
+            <div class="ui equal width form error">
+              <div class="field">
+                <select class="ui dropdown" name="bugs">
+                  <option class="item" default value="">{{report.bugs}}</option>
+                  <option class="item" value="No bugs">No Bugs</option>
+                  <option class="item" value="Bugs were and annoyance">
+                    Bugs were and annoyance
+                  </option>
+                  <option class="item" value="Bugs were terrible">
+                    Bugs were terrible
+                  </option>
+                </select>
+              </div>
+
+              <div class="ui equal width form error">
+                <div class="field">
+                  <select class="ui dropdown" name="snow">
+                    <option class="item" default value="">
+                      {{report.snow}}
+                    </option>
+                    <option class="item" value="Snow free">Snow Free</option>
+                    <option class="item" value="Intermittent - Easy to cross">
+                      Intermittent - Easy to cross
+                    </option>
+                    <option class="item" value="Snowfields to cross">
+                      Snowfields to cross
+                    </option>
+                    <option class="item" value="Snow-covered - Gear required">
+                      Snow-covered - Gear required
+                    </option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label>Trip Report</label>
+                  <textarea cols="40" rows="10" name="content" required>
+{{report.content}}</textarea
+                  >
+                </div>
+              </div>
+              {% if error_message %}
+              <div class="ui error message">
+                <div class="header">Action Forbidden</div>
+                <p>{{error_message}}</p>
+              </div>
+              {% endif %}
+              <div id="create_report" class="actions">
+                <input type="submit" class="ui button" value="Edit Report" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

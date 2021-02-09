@@ -68,8 +68,47 @@ def reports_show(request, report_id):
     return render(request, 'Reports/show.html', context)
 
 
-def profile(request):
+def reports_edit(request, report_id):
+    report = Report.objects.get(id=report_id)
+    if request.user == report.user:
+        if request.method == 'POST':
+            report_form = Report_Form(request.POST, instance=report)
+            if report_form.is_valid():
+                report_form.save()
+                return redirect('reports_show', report_id=report.id)
 
+    # report_form = Report_Form(instance=report)
+    # context = {'report_form': report_form, 'report': report}
+    # return render(request, 'Reports/show.html', context)
+    return redirect('/profile/')
+
+
+def report_create(request, hike_id):
+    if request.method == 'POST':
+        report_form = Report_Form(request.POST)
+        print(report_form.errors)
+        if report_form.is_valid():
+            new_report = report_form.save(commit=False)
+            new_report.user = request.user
+            new_report.hike_id = hike_id
+            new_report.save()
+            return redirect('hike_show', hike_id=hike_id)
+
+    # report_form = Report_Form()
+    # context = {'report_form': report_form, 'hike_id': hike_id}
+    return redirect('all_hikes')
+
+
+def report_delete(request, report_id, hike_id):
+    item = Report.objects.get(id=report_id)
+    if request.user == item.user:
+        Report.objects.get(id=report_id).delete()
+        return redirect('profile')
+    else:
+        return redirect('hike_show', hike_id=hike_id)
+
+
+def profile(request):
     user = User.objects.get(id=request.user.id)
     if Profile.objects.filter(user_id=request.user.id):
         profile = Profile.objects.get(user_id=request.user.id)
@@ -99,19 +138,3 @@ def hike_show(request, hike_id):
     context = {'reports': reports, 'hike': hike, 'hike_id': hike_id,
                'user': user, 'photos': photos}
     return render(request, 'Hikes/hikeShow.html', context)
-
-
-def report_create(request, hike_id):
-    if request.method == 'POST':
-        report_form = Report_Form(request.POST)
-        print(report_form.errors)
-        if report_form.is_valid():
-            new_report = report_form.save(commit=False)
-            new_report.user = request.user
-            new_report.hike_id = hike_id
-            new_report.save()
-            return redirect('hike_show', hike_id=hike_id)
-
-    # report_form = Report_Form()
-    # context = {'report_form': report_form, 'hike_id': hike_id}
-    return redirect('all_hikes')
