@@ -25,7 +25,11 @@
       integrity="sha512-CPLGe+O/BzgzHJKpdBXUuewmlxhlEfQ00zuYg1vcGCjOo88mqMeO1qa8q397ifxm18D12Go8OF7A42CjOKEl/g=="
       crossorigin="anonymous"
     />
-
+    <link
+      href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
     <link
       rel="stylesheet"
       type="text/css"
@@ -44,41 +48,13 @@
       integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
       crossorigin="anonymous"
     ></script>
+
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/modal.min.js"
       integrity="sha512-aAW/TaSuYfyjTcMsaYP67Dwe0vI5d7ej9X7NJBPkhafB+D5kx57flRNo8+tOXWA0Gcq0MBmhPatrvn1YwvH9gQ=="
       crossorigin="anonymous"
     ></script>
-
-    <script>
-      $(document).ready(function () {
-        $("#login_modal").click(function () {
-          $(".ui.modal.login").modal("show");
-        });
-
-        $("#hide_modal").click(function () {
-          $(".login").modal("hide");
-        });
-
-        $(".signup_modal").click(function () {
-          $(".signup").modal("show");
-        });
-
-        $(".delete_modal").click(function () {
-          $("#modal-" + this.id).modal("show");
-        });
-
-        $(".report_modal").click(function () {
-          $(".report").modal("show");
-        });
-
-        $(".ui.dropdown").dropdown({ showOnFocus: false });
-
-        $(".login").modal({
-          closable: true,
-        });
-      });
-    </script>
   </head>
   <body>
     {% comment %} ==== SEMANTIC MODAL LOGIN CONTENT ==== {% endcomment %}
@@ -232,5 +208,37 @@
     </div>
     {% comment %} ===== BLOCK CONTENT ===== {% endcomment %} {% block content%}
     {% endblock %}
+    <script>
+      $(document).ready(function () {
+        $("#login_modal").click(function () {
+          $(".ui.modal.login").modal("show");
+        });
+
+        $("#hide_modal").click(function () {
+          $(".login").modal("hide");
+        });
+
+        $(".signup_modal").click(function () {
+          $(".signup").modal("show");
+        });
+
+        $(".delete_modal").click(function () {
+          $("#modal-" + this.id).modal("show");
+        });
+
+        $(".report_modal").click(function () {
+          $(".report").modal("show");
+          $("#example2").calendar({
+            type: "date",
+          });
+        });
+
+        $(".ui.dropdown").dropdown({ showOnFocus: false });
+
+        $(".login").modal({
+          closable: true,
+        });
+      });
+    </script>
   </body>
 </html>

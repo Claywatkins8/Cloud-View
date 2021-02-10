@@ -16,11 +16,13 @@
             Hiker: {{report.user}}</a
           >
         </p>
-        <button class="fluid ui button">
-          <a href="{% url 'reports_show' report_id=report.id %}">
-            View Full Report</a
-          >
-        </button>
+
+        <a
+          class="fluid ui button"
+          href="{% url 'reports_show' report_id=report.id %}"
+        >
+          View Full Report</a
+        >
       </div>
 
       {%endfor%}

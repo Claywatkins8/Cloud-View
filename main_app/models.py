@@ -10,28 +10,25 @@ class Profile (models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
+REGIONS = (
+    ('Puget Sound', 'Puget Sound'),
+    ('North Cascades', 'North Cascades'),
+    ('Centeral Washington', 'Centeral Washington'),
+    ('South Cascades', 'South Cascades'),
+    ('Eastern Washington', 'Eastern Washington'),
+)
+
+
 class Hike (models.Model):
     name = models.CharField(max_length=200)
     coord = models.CharField(max_length=200)
     length = models.CharField(max_length=200)
     gain = models.CharField(max_length=200)
     highPoint = models.CharField(max_length=200)
-    PugetSound = 'PS'
-    NorthCascades = 'NC'
-    CenteralWA = 'CW'
-    SouthCascades = 'SC'
-    EasternWA = 'EW'
-    region_choices = [
-        (PugetSound, 'Puget Sound'),
-        (NorthCascades, 'North Cascades'),
-        (CenteralWA, 'Centeral Washington'),
-        (SouthCascades, 'South Cascades'),
-        (EasternWA, 'Eastern Washington'),
-    ]
-    hike_region = models.CharField(
-        max_length=2,
-        choices=region_choices,
-        default=PugetSound)
+    region = models.CharField(
+        max_length=30,
+        choices=REGIONS,
+        default=REGIONS[0][0])
     image = models.ImageField(upload_to='images/')
     description = models.CharField(max_length=5000, default=None)
     directions = models.CharField(max_length=5000)
@@ -50,6 +47,7 @@ class Report (models.Model):
     bugs = models.CharField(max_length=50)
     snow = models.CharField(max_length=50)
     image = models.ImageField(upload_to='images/')
+    date = models.CharField(max_length=100)
 
     class Meta:
         ordering = ['-id']

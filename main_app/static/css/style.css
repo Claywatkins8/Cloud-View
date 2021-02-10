@@ -86,3 +86,6 @@ a:hover {
   background-color: #f1f2e9;
   color: #7d8c81;
 }
+.icon-inline {
+  display: inline;
+}

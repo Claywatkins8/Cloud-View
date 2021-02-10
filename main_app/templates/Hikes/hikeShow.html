@@ -1,19 +1,91 @@
 {% extends 'base.html' %} {% block content %}
-<h1>{{hike.name}}</h1>
-<p>{{ hike.description }}</p>
-{% for report in reports%} {{report.content}} {% endfor %} {% comment %} Report
-Modal {% endcomment %}
-<a class="ui inverted report_modal button">Add Report</a>
-<div class="ui modal report">
+<div class="ui grid">
+  <div class="ui text container">
+    <div class="ui grid">
+      <div class="four column row">
+        <div class="column">
+          <h2>{{hike.name}}</h2>
+          <p>{{hike.region}}</p>
+        </div>
+        <div class="column">
+          <i class="location arrow icon"></i>
+          <h3 class="icon-inline">Location</h3>
+
+          <p>{{hike.region}}</p>
+        </div>
+        <div class="column">
+          <i class="map signs icon"></i>
+          <h3 class="icon-inline">Length</h3>
+          <p>{{hike.length}}</p>
+        </div>
+        <div class="column">
+          <i class="tree icon"></i>
+          <h3 class="icon-inline">Elevation</h3>
+          <p>{{hike.gain}}</p>
+          <p>{{hike.highPoint}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <img src="/static/css/resources/ParkButte.jpg" alt="" />
+      </div>
+      <div class="two column row">
+        <div class="column">
+          <div class="row">
+            <p>{{hike.name}}</p>
+          </div>
+          <div class="row">
+            <h3>HIKE INFO</h3>
+          </div>
+        </div>
+        <div class="column">
+          <p>{{hike.description}}</p>
+        </div>
+      </div>
+      <div class="ui section divider"></div>
+      <div class="two column row">
+        <div class="column">
+          <div class="row">
+            <p>{{hike.name}}</p>
+          </div>
+          <div class="row">
+            <h3>GETTING THERE</h3>
+          </div>
+        </div>
+        <div class="column">
+          <p>{{hike.directions}}</p>
+        </div>
+      </div>
+
+      <div class="ui section divider"></div>
+
+      <a class="fluid ui report_modal button">Add Report</a>
+      {% for report in reports%}
+      <div class="two column row">
+        <div class="column">
+          <div class="row">
+            <p>{{report.user}}</p>
+          </div>
+          <div class="row">
+            <h3>{{report.date}}</h3>
+          </div>
+        </div>
+        <div class="column">
+          <p>{{report.content}}</p>
+        </div>
+      </div>
+      <div class="ui section divider"></div>
+      {% endfor %} {% comment %} Report Modal {% endcomment %}
+    </div>
+  </div>
+</div>
+
+<div class="ui modal calendar report">
   <i class="close icon"></i>
   <div class="header">New Report</div>
   <div class="content">
-    <form
-      enctype="multipart/form-data"
-      method="POST"
-      action="{% url 'report_create' hike_id=hike_id.id %}"
-    >
+    <form method="POST" action="{% url 'report_create' hike_id=hike_id.id %}">
       {% csrf_token %}
+
       <div class="ui equal width form error">
         <div class="field">
           <select class="ui dropdown" name="hikeType">
@@ -27,7 +99,7 @@ Modal {% endcomment %}
           </select>
         </div>
 
-        <div class="ui equal width form error">
+        <div class="ui equal width form">
           <div class="field">
             <select class="ui dropdown" name="conditions">
               <option class="item" default value="">Trail Conditions</option>
@@ -102,6 +174,17 @@ Modal {% endcomment %}
                   </select>
                 </div>
 
+                <div class="ui equal width form">
+                  <div class="field">
+                    <div class="ui calendar" id="example2">
+                      <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" name="date" placeholder="Date" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="field">
                   <label>Trip Report</label>
                   <textarea
@@ -128,4 +211,5 @@ Modal {% endcomment %}
     </form>
   </div>
 </div>
+
 {% endblock %}
