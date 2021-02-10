@@ -26,6 +26,18 @@ a {
 a:hover {
   color: inherit;
 }
+h2 .header {
+  color: #182612;
+}
+h3 {
+  color: #7d8c81;
+}
+i {
+  color: #7d8c81;
+}
+.ui.card {
+  background-color: #f1f2e9;
+}
 
 /* The hero image */
 .hero-image {

@@ -16,13 +16,17 @@
         <div class="column">
           <i class="map signs icon"></i>
           <h3 class="icon-inline">Length</h3>
-          <p>{{hike.length}}</p>
+          <p>{{hike.length}} Miles</p>
         </div>
         <div class="column">
           <i class="tree icon"></i>
           <h3 class="icon-inline">Elevation</h3>
-          <p>{{hike.gain}}</p>
-          <p>{{hike.highPoint}}</p>
+          <div class="row">
+            <p>Gain: {{hike.gain}}</p>
+          </div>
+          <div class="row">
+            <p>High Point:{{hike.highPoint}}</p>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -55,6 +59,14 @@
           <p>{{hike.directions}}</p>
         </div>
       </div>
+      <div class="two column row">
+        <div class="column">
+          <div class="row">
+            <p>Trailhead: {{hike.coord}}</p>
+          </div>
+        </div>
+        <div class="column"></div>
+      </div>
 
       <div class="ui section divider"></div>
 
@@ -65,14 +77,34 @@
       <div class="two column row">
         <div class="column">
           <div class="row">
-            <p>{{report.user}}</p>
+            <p>{{report.date}}</p>
           </div>
           <div class="row">
-            <h3>{{report.date}}</h3>
+            <h3>{{report.user|upper}}</h3>
+          </div>
+          <div class="ui section hidden divider"></div>
+          <div class="row">
+            <p>{{report.hikeType}}</p>
+          </div>
+          <div class="row">
+            <p>{{report.conditions}}</p>
+          </div>
+          <div class="row">
+            <p>{{report.road}}</p>
+          </div>
+          <div class="row">
+            <p>{{report.bugs}}</p>
+          </div>
+          <div class="row">
+            <p>{{report.snow}}</p>
           </div>
         </div>
         <div class="column">
-          <p>{{report.content}}</p>
+          <p>
+            <a href="{% url 'reports_show' report_id=report.id %}"
+              >{{report.content}}
+            </a>
+          </p>
         </div>
       </div>
       <div class="ui section divider"></div>

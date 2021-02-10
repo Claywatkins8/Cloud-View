@@ -3,12 +3,13 @@
   <div class="column">
     <div class="ui centered card">
       <div class="image">
-        <img src="/images/avatar2/large/kristy.png" />
+        <img src="" />
       </div>
       <div class="content">
-        <a class="header">{{ user.first_name}} {{user.last_name}}</a>
+        <h2>{{ user.first_name}} {{user.last_name}}</h2>
         <div class="meta">
-          <span class="date">{{ user.date_joined }}</span>
+          <span class="date">Date Joined:{{ user.date_joined }}</span>
+          <span>Username: {{ user.username }}</span>
         </div>
       </div>
       <div class="extra content">
@@ -20,19 +21,30 @@
     </div>
   </div>
 
-  <div class="four wide column">
-    <h2>Reports</h2>
-
+  <div class="column">
     {% for report in reports %}
-    <div class="ui raised segment">
-      <h3 class="ui header">
-        <a href="/hike/{{report.hike_id}}"> {{report.hike}} </a>
-      </h3>
-      <p>
+
+    <div class="ui centered card">
+      <div class="content">
+        <h3>
+          <a class="header" href="/hike/{{report.hike_id}}">
+            {{report.hike}}
+          </a>
+        </h3>
+        <div class="meta">
+          <span class="date">{{ report.date }}</span>
+        </div>
+        <div class="description">
+          <a href="{% url 'reports_show' report_id=report.id %}"
+            >{{report.content}}
+          </a>
+        </div>
+      </div>
+      <div class="extra content">
         <a href="{% url 'reports_show' report_id=report.id %}">
-          {{report.user}}</a
-        >
-      </p>
+          <i class="user icon">{{report.user}}</i>
+        </a>
+      </div>
     </div>
     {% endfor %}
   </div>

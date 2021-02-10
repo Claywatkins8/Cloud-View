@@ -55,8 +55,7 @@
     </div>
     {%if auth_user == report.user%}
     <div class="row">
-      <a class="report_modal" class="fluid ui button">Edit This Report</a>
-
+      <a class="report_modal fluid ui button"> Edit This Report</a>
       <div class="ui section divider"></div>
     </div>
     <div class="row">
@@ -85,7 +84,7 @@
       {% csrf_token %}
       <div class="ui equal width form error">
         <div class="field">
-          <select class="ui dropdown" name="hikeType">
+          <select class="ui dropdown" name="hikeType" required>
             <option class="item" default value="">{{report.hikeType}}</option>
             <option class="item" value="Day Hike">Day Hike</option>
             <option class="item" value="Overnight">Overnight</option>
@@ -98,7 +97,7 @@
 
         <div class="ui equal width form error">
           <div class="field">
-            <select class="ui dropdown" name="conditions">
+            <select class="ui dropdown" name="conditions" required>
               <option class="item" default value="">
                 {{report.conditions}}
               </option>
@@ -119,7 +118,7 @@
 
           <div class="ui equal width form error">
             <div class="field">
-              <select class="ui dropdown" name="road">
+              <select class="ui dropdown" name="road" required>
                 <option class="item" default value="">{{report.road}}</option>
                 <option class="item" value="road suitable for all vehicles">
                   road suitable for all vehicles
@@ -144,7 +143,7 @@
 
             <div class="ui equal width form error">
               <div class="field">
-                <select class="ui dropdown" name="bugs">
+                <select class="ui dropdown" name="bugs" required>
                   <option class="item" default value="">{{report.bugs}}</option>
                   <option class="item" value="No bugs">No Bugs</option>
                   <option class="item" value="Bugs were and annoyance">
@@ -158,7 +157,7 @@
 
               <div class="ui equal width form error">
                 <div class="field">
-                  <select class="ui dropdown" name="snow">
+                  <select class="ui dropdown" name="snow" required>
                     <option class="item" default value="">
                       {{report.snow}}
                     </option>
@@ -173,6 +172,20 @@
                       Snow-covered - Gear required
                     </option>
                   </select>
+                </div>
+
+                <div class="field">
+                  <div class="ui calendar" id="example2">
+                    <div class="ui input left icon">
+                      <i class="calendar icon"></i>
+                      <input
+                        type="text"
+                        name="date"
+                        placeholder="Date"
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div class="field">
