@@ -6,7 +6,7 @@
           "pk.eyJ1IjoiY2xheXdhdGtpbnM4IiwiYSI6ImNra3pxbTdoNjBqNG8ycHBscHVqejA0YjYifQ.qSoGopxm4aaazfTjzVfUWA";
         var map = new mapboxgl.Map({
           container: "map", // container ID
-          style: "mapbox://styles/mapbox/streets-v11", // style URL
+          style: "mapbox://styles/claywatkins8/ckkzqp5yr88br17mlgiqlhlfi", // style URL
           center: [-120.7401, 47.7511], // starting position [lng, lat]
           zoom: 6, // starting zoom
         });
@@ -14,7 +14,7 @@
     {% for hike in hike_all %}
         var marker = new mapboxgl.Marker() // initialize a new marker
           .setLngLat([{{hike.coord}}]) // Marker [lng, lat] coordinates
-          .setPopup(new mapboxgl.Popup().setHTML("<h3><a href='/hike/{{hike.id}}'> {{hike.name}} </a></h3>"))
+          .setPopup(new mapboxgl.Popup().setHTML("<h3><a href='/hike/{{hike.id}}'> {{hike.name}} </a></h3><p>{{hike.length}} Miles</p><p>Gain: {{hike.gain}} ft</p>"))
           .addTo(map); // Add the marker to the map;
      {%endfor%}
         var geocoder = new MapboxGeocoder({

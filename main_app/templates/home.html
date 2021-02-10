@@ -16,11 +16,54 @@
   <a href="/reports" class="ui button item">Trip Reports</a>
 </div>
 <div id="home-reports" class="ui text container">
-  <div class="ui hidden divider"></div>
-  {%for report in reports%}
-  <h3 class="ui header">{{report.hike}}</h3>
-  <p>{{report.content}}</p>
-  <div class="ui section divider"></div>
-  {%endfor%}
+  <div class="ui center aligned grid">
+    <div class="row">
+      <div class="ui hidden divider"></div>
+      <h2>Reports From The Wild</h2>
+    </div>
+  </div>
+  <div class="ui grid">
+    <div class="ui hidden divider"></div>
+    {%for report in reports%}
+    <div class="two column row">
+      <div class="column">
+        <div class="row">
+          <p>{{report.date}}</p>
+        </div>
+        <div class="row">
+          <h3>{{report.hike|upper}}</h3>
+        </div>
+        <div class="ui section hidden divider"></div>
+        <div class="row">
+          <p>{{report.hikeType}}</p>
+        </div>
+        <div class="row">
+          <p>{{report.conditions}}</p>
+        </div>
+        <div class="row">
+          <p>{{report.road}}</p>
+        </div>
+        <div class="row">
+          <p>{{report.bugs}}</p>
+        </div>
+        <div class="row">
+          <p>{{report.snow}}</p>
+        </div>
+        <div class="ui section hidden divider"></div>
+        <div class="row">
+          <p>Hiker: {{report.user}}</p>
+        </div>
+      </div>
+      <div class="column">
+        <p>
+          <a href="{% url 'reports_show' report_id=report.id %}"
+            >{{report.content}}
+          </a>
+        </p>
+      </div>
+    </div>
+    <div class="ui section divider"></div>
+    {%endfor%}
+  </div>
 </div>
 {% endblock %}
