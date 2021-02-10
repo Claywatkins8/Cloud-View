@@ -32,6 +32,7 @@ class Hike (models.Model):
     image = models.ImageField(upload_to='images/')
     description = models.CharField(max_length=5000, default=None)
     directions = models.CharField(max_length=5000)
+    image = models.CharField(max_length=1000)
 
     def __str__(self):
         return f"{self.name}"
@@ -44,10 +45,10 @@ class Report (models.Model):
     hikeType = models.CharField(max_length=50)
     conditions = models.CharField(max_length=50)
     road = models.CharField(max_length=50)
+    date = models.CharField(max_length=100)
     bugs = models.CharField(max_length=50)
     snow = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='images/')
-    date = models.CharField(max_length=100)
+    image = models.CharField(max_length=1000)
 
     class Meta:
         ordering = ['-id']
