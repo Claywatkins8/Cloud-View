@@ -12,12 +12,15 @@
         <p>{{report.date}}</p>
         <p>{{report.hikeType}}</p>
 
-        <p>
-          <a href="{% url 'reports_show' report_id=report.id %}">
-            Hiker: {{report.user}}</a
-          >
-        </p>
+        {% for photo in userphoto %} {% if report.user_id == photo.user_id%}
+        <img
+          class="ui avatar image"
+          src="{{ photo.url }}"
+          alt="profile photo"
+        />
+        {{report.user|upper}} {% endif %} {% endfor %}
 
+        <div class="ui section divider"></div>
         <a
           class="fluid ui button"
           href="{% url 'reports_show' report_id=report.id %}"
@@ -30,4 +33,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}

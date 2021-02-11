@@ -1,14 +1,17 @@
 {% extends 'base.html' %} {% block content %}
 
-<div class="ui grid">
+<div class="ui stackable grid">
   <div class="two wide center aligned column"></div>
   <div class="six wide column">
     <h1>{{report.hike}}</h1>
     <div class="ui section hidden divider"></div>
     <h5>TRIP REPORT BY:</h5>
-    <p>{{report.user}}</p>
+    {% for photo in userphoto %} {% if report.user_id == photo.user_id%}
+    <img class="ui avatar image" src="{{ photo.url }}" alt="profile photo" />
+    {{report.user|upper}} {% endif %} {% endfor %}
     <div class="ui section hidden divider"></div>
     <h5>DATE HIKED</h5>
+    {{report.date}}
   </div>
   <div class="six wide column">
     <div class="row">
@@ -33,10 +36,29 @@
   </div>
 </div>
 <div class="ui section divider"></div>
+
+{%for photo in reportphoto%}
+<div class="ui hidden section divider"></div>
+<div class="ui center aligned text container">
+  <img
+    class="ui large centered bordered rounded image"
+    src="{{photo.url}}"
+    alt=""
+  />
+  {%if auth_user == report.user%}
+
+  <a href="{% url 'report_photo_delete' photo_id=photo.id %}"
+    ><i class="trash icon"></i
+  ></a>
+</div>
+{%endif%}
+<div class="ui hidden section divider"></div>
+{%endfor%}
+<div class="ui section divider"></div>
 <div class="two wide center aligned column"></div>
 <div class="twelve wide column"></div>
 
-<div class="ui grid">
+<div class="ui stackable grid">
   <div class="two wide center aligned column"></div>
   <div class="six wide column">
     <p>{{report.content}}</p>
@@ -63,9 +85,27 @@
         class="fluid ui button"
         href="{% url 'report_delete' report_id=report.id hike_id=report.hike_id %}"
       >
-        Delete
+        Delete Report
       </a>
     </div>
+    <div class="ui section divider"></div>
+    <form
+      action="{% url 'add_report_photo' report.id %}"
+      enctype="multipart/form-data"
+      method="POST"
+    >
+      {% csrf_token %}
+      <label class="fluid ui button" for="upload-photo">Choose Photo...</label>
+      <input
+        type="file"
+        id="upload-photo"
+        name="photo-file"
+        value="Choose File"
+      />
+      <br />
+      <input type="submit" class="fluid ui button" value="Submit Upload" />
+    </form>
+    <div class="ui section divider"></div>
     {% endif %}
   </div>
 </div>

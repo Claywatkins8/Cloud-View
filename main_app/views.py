@@ -37,7 +37,7 @@ def home(request):
                     user = signup_form.save()
                     user.save()
                     login(request, user)
-                    return redirect('home/')
+                    return redirect('/')
                 else:
                     context = {'error': 'Invalid signup, please try again!'}
                     return render(request, 'home.html', context)
@@ -66,6 +66,7 @@ def reports_all(request):
     return render(request, 'allReports.html', context)
 
 
+@login_required
 def reports_show(request, report_id):
     report = Report.objects.get(id=report_id)
     user = User.objects.get(id=report.user_id)
@@ -78,6 +79,7 @@ def reports_show(request, report_id):
     return render(request, 'Reports/show.html', context)
 
 
+@login_required
 def reports_edit(request, report_id):
     report = Report.objects.get(id=report_id)
     if request.user == report.user:
@@ -93,6 +95,7 @@ def reports_edit(request, report_id):
     return redirect('/profile/')
 
 
+@login_required
 def report_create(request, hike_id):
     if request.method == 'POST':
         report_form = Report_Form(request.POST)
@@ -109,6 +112,7 @@ def report_create(request, hike_id):
     return redirect('all_hikes')
 
 
+@login_required
 def report_delete(request, report_id, hike_id):
     item = Report.objects.get(id=report_id)
     if request.user == item.user:
@@ -118,6 +122,7 @@ def report_delete(request, report_id, hike_id):
         return redirect('hike_show', hike_id=hike_id)
 
 
+@login_required
 def profile(request):
     user = User.objects.get(id=request.user.id)
     reports = Report.objects.filter(user=request.user)
@@ -131,11 +136,10 @@ def profile(request):
 
 def all_hikes(request):
     hike_all = Hike.objects.all()
-    user = User.objects.get(id=request.user.id)
     userphoto = userPhoto.objects.all()
     hikephoto = hikePhoto.objects.all()
     context = {
-        'hike_all': hike_all, 'user': user, 'userphoto': userphoto, 'hikephoto': hikephoto, }
+        'hike_all': hike_all, 'userphoto': userphoto, 'hikephoto': hikephoto, }
     return render(request, 'map.html', context)
 
 
@@ -143,15 +147,15 @@ def hike_show(request, hike_id):
     hike = Hike.objects.get(id=hike_id)
     hike_id = Hike.objects.get(id=hike_id)
     reports = Report.objects.filter(hike_id=hike_id)
-    user = User.objects.get(id=request.user.id)
     userphoto = userPhoto.objects.all()
     hikephoto = hikePhoto.objects.all()
     reportphoto = reportPhoto.objects.all()
     context = {'reports': reports, 'hike': hike, 'hike_id': hike_id,
-               'user': user, 'userphoto': userphoto, 'hikephoto': hikephoto, 'reportphoto': reportphoto, }
+               'userphoto': userphoto, 'hikephoto': hikephoto, 'reportphoto': reportphoto, }
     return render(request, 'Hikes/hikeShow.html', context)
 
 
+@login_required
 def add_user_photo(request):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
@@ -174,6 +178,7 @@ def add_user_photo(request):
     return redirect('profile')
 
 
+@login_required
 def add_report_photo(request, report_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
@@ -193,9 +198,10 @@ def add_report_photo(request, report_id):
             photo.save()
         except:
             print('An error occurred uploading file to S3')
-    return redirect('home')
+    return redirect('reports_all')
 
 
+@login_required
 def add_hike_photo(request, hike_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
@@ -218,16 +224,19 @@ def add_hike_photo(request, hike_id):
     return redirect('home')
 
 
+@login_required
 def user_photo_delete(request, photo_id):
     userPhoto.objects.get(id=photo_id).delete()
     return redirect('profile')
 
 
+@login_required
 def report_photo_delete(request, photo_id):
     reportPhoto.objects.get(id=photo_id).delete()
     return redirect('home')
 
 
+@login_required
 def hike_photo_delete(request, photo_id):
     hikePhoto.objects.get(id=photo_id).delete()
     return redirect('home')

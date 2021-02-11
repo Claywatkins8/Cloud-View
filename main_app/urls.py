@@ -13,7 +13,7 @@ urlpatterns = [
          views.add_user_photo, name='add_user_photo'),
     path('profile/<int:photo_id>/delete/',
          views.user_photo_delete, name='user_photo_delete'),
-    path('reports/<int:reportPhoto_id>/add_report_photo/',
+    path('reports/add_report_photo/<int:report_id>/',
          views.add_report_photo, name='add_report_photo'),
     path('reports/<int:photo_id>/delete/',
          views.report_photo_delete, name='report_photo_delete'),

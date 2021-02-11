@@ -1,16 +1,20 @@
 {% extends 'base.html' %} {% block content %}
 <div class="ui grid">
   <div class="ui text container">
-    <div class="ui two column grid">
+    <div class="ui stackable two column grid">
       <div class="column">
         <div class="ui centered card">
           <div class="image">
             {% for photo in userphoto %}
             <img class="profile-img" src="{{photo.url}}" />
-            <a href="{% url 'user_photo_delete' photo_id=photo.id %}">Delete</a>
+            <a
+              class="ui fluid button"
+              href="{% url 'user_photo_delete' photo_id=photo.id %}"
+              >Delete Photo</a
+            >
             {% empty %}
             <img
-              class="profile-img"
+              class="ui mini circular image"
               src="https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"
             />
             <form
@@ -20,16 +24,29 @@
             >
               {% csrf_token %}
 
-              <input type="file" name="photo-file" />
-              <br /><br />
-              <input type="submit" class="btn" value="Upload Photo" />
+              <label class="fluid ui button" for="upload-photo"
+                >Choose Photo...</label
+              >
+              <input
+                type="file"
+                id="upload-photo"
+                name="photo-file"
+                value="Choose File"
+              />
+              <br />
+              <input
+                type="submit"
+                class="fluid ui button"
+                value="Submit Upload"
+              />
             </form>
             {% endfor %}
           </div>
           <div class="content">
             <h2>{{ user.first_name}} {{user.last_name}}</h2>
             <div class="meta">
-              <span class="date">Date Joined:{{ user.date_joined }}</span>
+              <span class="date">Joined: {{ user.date_joined }}</span>
+              <br />
               <span>Username: {{ user.username }}</span>
             </div>
           </div>
@@ -63,7 +80,20 @@
           </div>
           <div class="extra content">
             <a href="{% url 'reports_show' report_id=report.id %}">
-              <i class="user icon">{{report.user}}</i>
+              <i class="clock outline icon"></i>
+              <p class="icon-inline">{{ report.hikeType}}</p>
+              <br />
+              <i class="map signs icon"></i>
+              <p class="icon-inline">{{report.conditions}}</p>
+              <br />
+              <i class="road icon"></i>
+              <p class="icon-inline">{{report.road}}</p>
+              <br />
+              <i class="bug icon"></i>
+              <p class="icon-inline">{{report.bugs}}</p>
+              <br />
+              <i class="snowflake outline icon"></i>
+              <p class="icon-inline">{{report.snow}}</p>
             </a>
           </div>
         </div>

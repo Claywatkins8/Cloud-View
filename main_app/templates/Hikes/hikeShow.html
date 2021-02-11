@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <div class="ui grid">
   <div class="ui text container">
-    <div class="ui grid">
+    <div class="ui stackable grid">
       <div class="four column row">
         <div class="column">
           <h2>{{hike.name}}</h2>
@@ -30,7 +30,11 @@
         </div>
       </div>
       <div class="row">
-        <img src="/static/css/resources/ParkButte.jpg" alt="" />
+        <img
+          class="ui centered bordered rounded image"
+          src="{{hike.image}}"
+          alt=""
+        />
       </div>
       <div class="two column row">
         <div class="column">
@@ -99,7 +103,13 @@
             <p>{{report.date}}</p>
           </div>
           <div class="row">
-            <h3>{{report.user|upper}}</h3>
+            {% for photo in userphoto %} {% if report.user_id == photo.user_id%}
+            <img
+              class="ui avatar image"
+              src="{{ photo.url }}"
+              alt="profile photo"
+            />
+            {{report.user|upper}} {% endif %} {% endfor %}
           </div>
           <div class="ui section hidden divider"></div>
           <div class="row">
