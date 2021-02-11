@@ -5,13 +5,16 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 
-from .models import User, Hike, Report, Photo, Profile
+from .models import User, Hike, Report, userPhoto, hikePhoto, reportPhoto
 from .forms import NewUserForm, Report_Form
 
-from django.conf import settings
-from django.core.mail import send_mail
 
-
+# AWS IMPORTS
+import boto3
+import uuid
+# AWS "Constants"
+S3_BASE_URL = 'https://s3-us-west-2.amazonaws.com/'
+BUCKET = 'cloud-view'
 # Create your views here.
 # Define the home view
 
@@ -41,8 +44,11 @@ def home(request):
     reports = Report.objects.all().order_by('-id')[:3]
     signup_form = NewUserForm()
     login_form = AuthenticationForm()
+    userphoto = userPhoto.objects.all()
+    hikephoto = hikePhoto.objects.all()
+    reportphoto = reportPhoto.objects.all()
     context = {'reports': reports, 'signup_form': signup_form,
-               'login_form': login_form, }
+               'login_form': login_form, 'userphoto': userphoto, 'hikephoto': hikephoto, 'reportphoto': reportphoto}
     return render(request, 'home.html', context)
 
 
@@ -52,9 +58,11 @@ def about(request):
 
 def reports_all(request):
     reports = Report.objects.all()
-    photos = Photo.objects.all()
+    userphoto = userPhoto.objects.all()
+    hikephoto = hikePhoto.objects.all()
+    reportphoto = reportPhoto.objects.all()
     context = {'reports': reports,
-               'photos': photos}
+               'userphoto': userphoto, 'hikephoto': hikephoto, 'reportphoto': reportphoto}
     return render(request, 'allReports.html', context)
 
 
@@ -62,9 +70,11 @@ def reports_show(request, report_id):
     report = Report.objects.get(id=report_id)
     user = User.objects.get(id=report.user_id)
     auth_user = User.objects.get(id=request.user.id)
-    photos = Photo.objects.all()
+    userphoto = userPhoto.objects.all()
+    hikephoto = hikePhoto.objects.all()
+    reportphoto = reportPhoto.objects.all()
     context = {'report': report, 'user': user,
-               'auth_user': auth_user, 'photos': photos}
+               'auth_user': auth_user, 'userphoto': userphoto, 'hikephoto': hikephoto, 'reportphoto': reportphoto}
     return render(request, 'Reports/show.html', context)
 
 
@@ -110,22 +120,22 @@ def report_delete(request, report_id, hike_id):
 
 def profile(request):
     user = User.objects.get(id=request.user.id)
-    if Profile.objects.filter(user_id=request.user.id):
-        profile = Profile.objects.get(user_id=request.user.id)
-    else:
-        profile = ""
     reports = Report.objects.filter(user=request.user)
-    context = {'profile': profile,
-               'user': user, 'reports': reports}
+    userphoto = userPhoto.objects.all()
+    hikephoto = hikePhoto.objects.all()
+    reportphoto = reportPhoto.objects.all()
+    context = {
+        'user': user, 'reports': reports, 'userphoto': userphoto, 'hikephoto': hikephoto, 'reportphoto': reportphoto}
     return render(request, 'profile.html', context)
 
 
 def all_hikes(request):
     hike_all = Hike.objects.all()
     user = User.objects.get(id=request.user.id)
-    photos = Photo.objects.all()
+    userphoto = userPhoto.objects.all()
+    hikephoto = hikePhoto.objects.all()
     context = {
-        'hike_all': hike_all, 'user': user, 'photos': photos}
+        'hike_all': hike_all, 'user': user, 'userphoto': userphoto, 'hikephoto': hikephoto, }
     return render(request, 'map.html', context)
 
 
@@ -134,7 +144,90 @@ def hike_show(request, hike_id):
     hike_id = Hike.objects.get(id=hike_id)
     reports = Report.objects.filter(hike_id=hike_id)
     user = User.objects.get(id=request.user.id)
-    photos = Photo.objects.all()
+    userphoto = userPhoto.objects.all()
+    hikephoto = hikePhoto.objects.all()
+    reportphoto = reportPhoto.objects.all()
     context = {'reports': reports, 'hike': hike, 'hike_id': hike_id,
-               'user': user, 'photos': photos}
+               'user': user, 'userphoto': userphoto, 'hikephoto': hikephoto, 'reportphoto': reportphoto, }
     return render(request, 'Hikes/hikeShow.html', context)
+
+
+def add_user_photo(request):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + \
+            photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+
+            photo = userPhoto(url=url,
+                              user_id=request.user.id)
+            photo.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('profile')
+
+
+def add_report_photo(request, report_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + \
+            photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+
+            photo = reportPhoto(url=url, report_id=report_id,
+                                user_id=request.user.id)
+            photo.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('home')
+
+
+def add_hike_photo(request, hike_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + \
+            photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+
+            photo = hikePhoto(url=url, hike_id=hike_id,
+                              user_id=request.user.id)
+            photo.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('home')
+
+
+def user_photo_delete(request, photo_id):
+    userPhoto.objects.get(id=photo_id).delete()
+    return redirect('profile')
+
+
+def report_photo_delete(request, photo_id):
+    reportPhoto.objects.get(id=photo_id).delete()
+    return redirect('home')
+
+
+def hike_photo_delete(request, photo_id):
+    hikePhoto.objects.get(id=photo_id).delete()
+    return redirect('home')

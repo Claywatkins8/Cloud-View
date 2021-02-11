@@ -29,11 +29,12 @@ a:hover {
 h2 .header {
   color: #182612;
 }
-h3 {
+h3 i {
   color: #7d8c81;
 }
-i {
-  color: #7d8c81;
+
+p {
+  line-height: 2em !important;
 }
 .ui.card {
   background-color: #f1f2e9;
@@ -100,4 +101,7 @@ i {
 }
 .icon-inline {
   display: inline;
+}
+.ui.text.container {
+  max-width: 900px !important;
 }

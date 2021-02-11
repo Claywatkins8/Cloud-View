@@ -66,6 +66,38 @@
     ></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#login_modal").click(function () {
+          $(".ui.modal.login").modal("show");
+        });
+
+        $("#hide_modal").click(function () {
+          $(".login").modal("hide");
+        });
+
+        $(".signup_modal").click(function () {
+          $(".signup").modal("show");
+        });
+
+        $(".delete_modal").click(function () {
+          $("#modal-" + this.id).modal("show");
+        });
+
+        $(".report_modal").click(function () {
+          $(".report").modal("show");
+          $("#example2").calendar({
+            type: "date",
+          });
+        });
+
+        $(".ui.dropdown").dropdown({ showOnFocus: false });
+
+        $(".login").modal({
+          closable: true,
+        });
+      });
+    </script>
   </head>
   <body>
     {% comment %} ==== SEMANTIC MODAL LOGIN CONTENT ==== {% endcomment %}
@@ -219,37 +251,5 @@
     </div>
     {% comment %} ===== BLOCK CONTENT ===== {% endcomment %} {% block content%}
     {% endblock %}
-    <script>
-      $(document).ready(function () {
-        $("#login_modal").click(function () {
-          $(".ui.modal.login").modal("show");
-        });
-
-        $("#hide_modal").click(function () {
-          $(".login").modal("hide");
-        });
-
-        $(".signup_modal").click(function () {
-          $(".signup").modal("show");
-        });
-
-        $(".delete_modal").click(function () {
-          $("#modal-" + this.id).modal("show");
-        });
-
-        $(".report_modal").click(function () {
-          $(".report").modal("show");
-          $("#example2").calendar({
-            type: "date",
-          });
-        });
-
-        $(".ui.dropdown").dropdown({ showOnFocus: false });
-
-        $(".login").modal({
-          closable: true,
-        });
-      });
-    </script>
   </body>
 </html>

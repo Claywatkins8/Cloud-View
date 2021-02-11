@@ -5,11 +5,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-
-class Profile (models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-
 REGIONS = (
     ('Puget Sound', 'Puget Sound'),
     ('North Cascades', 'North Cascades'),
@@ -57,10 +52,26 @@ class Report (models.Model):
         return f"{self.user}"
 
 
-class Photo(models.Model):
+class userPhoto(models.Model):
+    url = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"User profile photo: {self.profile_id} @{self.url}"
+
+
+class hikePhoto(models.Model):
+    url = models.CharField(max_length=200)
+    hike = models.ForeignKey(Hike, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Hike photo: {self.hike_id} @{self.url}"
+
+
+class reportPhoto(models.Model):
     url = models.CharField(max_length=200)
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"User Report photo: {self.profile_id} @{self.url}"
+        return f"user report photo: {self.report_id} @{self.url}"
