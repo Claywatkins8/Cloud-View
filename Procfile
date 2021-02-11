@@ -1,0 +1,1 @@
+web: gunicorn cloud_view_app.wsgi
