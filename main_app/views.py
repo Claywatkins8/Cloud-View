@@ -73,7 +73,7 @@ def reports_show(request, report_id):
     auth_user = User.objects.get(id=request.user.id)
     userphoto = userPhoto.objects.all()
     hikephoto = hikePhoto.objects.all()
-    reportphoto = reportPhoto.objects.all()
+    reportphoto = reportPhoto.objects.filter(report_id=report_id)
     context = {'report': report, 'user': user,
                'auth_user': auth_user, 'userphoto': userphoto, 'hikephoto': hikephoto, 'reportphoto': reportphoto}
     return render(request, 'Reports/show.html', context)
@@ -126,7 +126,7 @@ def report_delete(request, report_id, hike_id):
 def profile(request):
     user = User.objects.get(id=request.user.id)
     reports = Report.objects.filter(user=request.user)
-    userphoto = userPhoto.objects.all()
+    userphoto = userPhoto.objects.filter(user=request.user)
     hikephoto = hikePhoto.objects.all()
     reportphoto = reportPhoto.objects.all()
     context = {
