@@ -77,7 +77,6 @@ def about(request):
     return render(request, 'about.html')
 
 
-@login_required
 def reports_all(request):
     reports = Report.objects.all()
     userphoto = userPhoto.objects.all()
@@ -88,6 +87,7 @@ def reports_all(request):
     return render(request, 'allReports.html', context)
 
 
+@login_required
 def reports_show(request, report_id):
     report = Report.objects.get(id=report_id)
     user = User.objects.get(id=request.user.id)
