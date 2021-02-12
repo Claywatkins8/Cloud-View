@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import User, Hike, Report, userPhoto, hikePhoto, reportPhoto
 from .forms import NewUserForm, Report_Form
-
+from django.contrib import messages
 
 # AWS IMPORTS
 import boto3

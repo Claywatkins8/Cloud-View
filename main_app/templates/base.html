@@ -98,6 +98,13 @@
         });
       });
     </script>
+    {% if error_message %}
+    <script>
+      $(document).ready(function () {
+        $(".signup_modal").modal("show");
+      });
+    </script>
+    {% endif %}
   </head>
   <body>
     {% comment %} ==== SEMANTIC MODAL LOGIN CONTENT ==== {% endcomment %}
@@ -123,6 +130,11 @@
           <div class="ui error message">
             <div class="header">Action Forbidden</div>
             <p>{{error_message}}</p>
+            <script>
+              $(document).ready(function () {
+                $(".login").modal("show");
+              });
+            </script>
           </div>
           {% endif %}
           <div class="actions">
@@ -215,6 +227,11 @@
           <div class="ui error message">
             <div class="header">Action Forbidden</div>
             <p>{{error}}</p>
+            <script>
+              $(document).ready(function () {
+                $(".signup").modal("show");
+              });
+            </script>
           </div>
           {% endif %}
           <div class="actions">
