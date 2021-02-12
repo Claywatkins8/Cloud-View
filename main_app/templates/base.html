@@ -112,7 +112,7 @@
       <i class="close icon"></i>
       <div class="header">Login</div>
       <div class="content">
-        <form method="POST" action="{% url 'login' %}">
+        <form method="POST" action="{% url 'login_user' %}">
           {% csrf_token %} {% comment %}FORM {% endcomment %}
           <div class="ui equal width form error">
             <div class="fields">
@@ -126,17 +126,17 @@
               </div>
             </div>
           </div>
-          {% if error_message %}
+          {% for message in messages %}
           <div class="ui error message">
             <div class="header">Action Forbidden</div>
-            <p>{{error_message}}</p>
+            <p>{{message}}</p>
             <script>
               $(document).ready(function () {
                 $(".login").modal("show");
               });
             </script>
           </div>
-          {% endif %}
+          {% endfor %}
           <div class="actions">
             <input type="submit" class="ui button" value="Login" />
             <a class="ui button signup_modal">Sign Up</a>

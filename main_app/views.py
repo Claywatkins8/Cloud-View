@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .models import User, Hike, Report, userPhoto, hikePhoto, reportPhoto
 from .forms import NewUserForm, Report_Form
 from django.contrib import messages
+from django.contrib.auth import authenticate
 
 # AWS IMPORTS
 import boto3
@@ -50,6 +51,25 @@ def home(request):
     context = {'reports': reports, 'signup_form': signup_form,
                'login_form': login_form, 'userphoto': userphoto, 'hikephoto': hikephoto, 'reportphoto': reportphoto}
     return render(request, 'home.html', context)
+
+
+def login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                return redirect('home')
+        else:
+            messages.error(request, 'username or password not correct')
+            return redirect('home')
+
+    else:
+        form = AuthenticationForm()
+    return render(request, 'home.html', {'form': form})
 
 
 def about(request):
