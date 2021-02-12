@@ -37,7 +37,7 @@ def home(request):
                 if signup_form.is_valid():
                     user = signup_form.save()
                     user.save()
-                    login(request, user)
+                    auth.login(request, user)
                     return redirect('/')
                 else:
                     context = {'error': 'Invalid signup, please try again!'}
