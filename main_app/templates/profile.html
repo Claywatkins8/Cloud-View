@@ -51,10 +51,8 @@
             </div>
           </div>
           <div class="extra content">
-            <a>
-              <i class="user icon"></i>
-              {{ user.email }}
-            </a>
+            <i class="user icon"></i>
+            {{ user.email }}
           </div>
         </div>
       </div>
@@ -69,32 +67,28 @@
                 {{report.hike}}
               </a>
             </h3>
-            <div class="meta">
-              <span class="date">{{ report.date }}</span>
-            </div>
-            <div class="description">
-              <a href="{% url 'reports_show' report_id=report.id %}"
-                >{{report.content}}
-              </a>
-            </div>
+            <a href="{% url 'reports_show' report_id=report.id %}">
+              <div class="meta">
+                <span class="date">{{ report.date }}</span>
+              </div>
+              <div class="description">{{report.content}}</div>
+            </a>
           </div>
           <div class="extra content">
-            <a href="{% url 'reports_show' report_id=report.id %}">
-              <i class="clock outline icon"></i>
-              <p class="icon-inline">{{ report.hikeType}}</p>
-              <br />
-              <i class="map signs icon"></i>
-              <p class="icon-inline">{{report.conditions}}</p>
-              <br />
-              <i class="road icon"></i>
-              <p class="icon-inline">{{report.road}}</p>
-              <br />
-              <i class="bug icon"></i>
-              <p class="icon-inline">{{report.bugs}}</p>
-              <br />
-              <i class="snowflake outline icon"></i>
-              <p class="icon-inline">{{report.snow}}</p>
-            </a>
+            <i class="clock outline icon"></i>
+            <p class="icon-inline">{{ report.hikeType}}</p>
+            <br />
+            <i class="map signs icon"></i>
+            <p class="icon-inline">{{report.conditions}}</p>
+            <br />
+            <i class="road icon"></i>
+            <p class="icon-inline">{{report.road}}</p>
+            <br />
+            <i class="bug icon"></i>
+            <p class="icon-inline">{{report.bugs}}</p>
+            <br />
+            <i class="snowflake outline icon"></i>
+            <p class="icon-inline">{{report.snow}}</p>
           </div>
         </div>
         {% endfor %}
