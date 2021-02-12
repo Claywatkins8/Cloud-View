@@ -92,8 +92,9 @@
       <p>Trailhead: {{hike.coord}}</p>
 
       <div class="ui section divider"></div>
-
+      {%if use.is_authenticated%}
       <a class="fluid ui report_modal button">Add Report</a>
+      {%endif%}
       <div class="ui section hidden divider"></div>
 
       {% for report in reports%}
