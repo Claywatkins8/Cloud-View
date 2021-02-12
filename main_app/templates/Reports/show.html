@@ -45,7 +45,7 @@
     src="{{photo.url}}"
     alt=""
   />
-  {%if auth_user == report.user%}
+  {%if user == report.user%}
 
   <a href="{% url 'report_photo_delete' photo_id=photo.id %}"
     ><i class="trash icon"></i
@@ -75,7 +75,7 @@
       <a class="fluid ui button" href="/reports"> All Trip Reports</a>
       <div class="ui section divider"></div>
     </div>
-    {%if auth_user == report.user%}
+    {%if user == report.user%}
     <div class="row">
       <a class="report_modal fluid ui button"> Edit This Report</a>
       <div class="ui section divider"></div>
