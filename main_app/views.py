@@ -109,9 +109,6 @@ def reports_edit(request, report_id):
                 report_form.save()
                 return redirect('reports_show', report_id=report.id)
 
-    # report_form = Report_Form(instance=report)
-    # context = {'report_form': report_form, 'report': report}
-    # return render(request, 'Reports/show.html', context)
     return redirect('/profile/')
 
 
@@ -127,8 +124,6 @@ def report_create(request, hike_id):
             new_report.save()
             return redirect('hike_show', hike_id=hike_id)
 
-    # report_form = Report_Form()
-    # context = {'report_form': report_form, 'hike_id': hike_id}
     return redirect('all_hikes')
 
 
