@@ -7,6 +7,11 @@ POWERED BY:
 - SQL
 - PostgreSQL
 
+## Login to the Test-Account for full functionality or create an account
+
+- Username: test-account
+- Password: test1234!@#$
+
 ## User Stories
 
 ### Description
